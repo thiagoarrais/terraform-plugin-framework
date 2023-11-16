@@ -394,6 +394,14 @@ func TestServerPlanResourceChange(t *testing.T) {
 			"test_configured_set":                   tftypes.Set{ElementType: tftypes.String},
 			"test_configured_string":                tftypes.String,
 			"test_configured_string_custom_type":    tftypes.String,
+			"test_computed_nested_set_bool_attributes": tftypes.Set{
+				ElementType: tftypes.Object{
+					AttributeTypes: map[string]tftypes.Type{
+						"first_bool_attribute":  tftypes.Bool,
+						"second_bool_attribute": tftypes.Bool,
+					},
+				},
+			},
 			"test_configured_nested_list": tftypes.List{
 				ElementType: tftypes.Object{
 					AttributeTypes: map[string]tftypes.Type{
@@ -641,6 +649,21 @@ func TestServerPlanResourceChange(t *testing.T) {
 						"string_attribute": schema.StringAttribute{
 							Optional: true,
 							Default:  stringdefault.StaticString("default-attribute"),
+						},
+					},
+				},
+			},
+			"test_computed_nested_set_bool_attributes": schema.SetNestedAttribute{
+				Computed: true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"first_bool_attribute": schema.BoolAttribute{
+							Optional: true,
+							Default:  booldefault.StaticBool(false),
+						},
+						"second_bool_attribute": schema.BoolAttribute{
+							Optional: true,
+							Default:  booldefault.StaticBool(false),
 						},
 					},
 				},
@@ -1366,6 +1389,30 @@ func TestServerPlanResourceChange(t *testing.T) {
 								),
 							},
 						),
+						"test_computed_nested_set_bool_attributes": tftypes.NewValue(
+							tftypes.Set{
+								ElementType: tftypes.Object{
+									AttributeTypes: map[string]tftypes.Type{
+										"first_bool_attribute":  tftypes.Bool,
+										"second_bool_attribute": tftypes.Bool,
+									},
+								},
+							},
+							[]tftypes.Value{
+								tftypes.NewValue(
+									tftypes.Object{
+										AttributeTypes: map[string]tftypes.Type{
+											"first_bool_attribute":  tftypes.Bool,
+											"second_bool_attribute": tftypes.Bool,
+										},
+									},
+									map[string]tftypes.Value{
+										"first_bool_attribute":  tftypes.NewValue(tftypes.Bool, true),
+										"second_bool_attribute": tftypes.NewValue(tftypes.Bool, nil),
+									},
+								),
+							},
+						),
 						"test_computed_nested_single": tftypes.NewValue(
 							tftypes.Object{
 								AttributeTypes: map[string]tftypes.Type{
@@ -1734,6 +1781,30 @@ func TestServerPlanResourceChange(t *testing.T) {
 									},
 									map[string]tftypes.Value{
 										"string_attribute": tftypes.NewValue(tftypes.String, nil),
+									},
+								),
+							},
+						),
+						"test_computed_nested_set_bool_attributes": tftypes.NewValue(
+							tftypes.Set{
+								ElementType: tftypes.Object{
+									AttributeTypes: map[string]tftypes.Type{
+										"first_bool_attribute":  tftypes.Bool,
+										"second_bool_attribute": tftypes.Bool,
+									},
+								},
+							},
+							[]tftypes.Value{
+								tftypes.NewValue(
+									tftypes.Object{
+										AttributeTypes: map[string]tftypes.Type{
+											"first_bool_attribute":  tftypes.Bool,
+											"second_bool_attribute": tftypes.Bool,
+										},
+									},
+									map[string]tftypes.Value{
+										"first_bool_attribute":  tftypes.NewValue(tftypes.Bool, true),
+										"second_bool_attribute": tftypes.NewValue(tftypes.Bool, nil),
 									},
 								),
 							},
@@ -2144,6 +2215,30 @@ func TestServerPlanResourceChange(t *testing.T) {
 									},
 									map[string]tftypes.Value{
 										"string_attribute": tftypes.NewValue(tftypes.String, "default-attribute"),
+									},
+								),
+							},
+						),
+						"test_computed_nested_set_bool_attributes": tftypes.NewValue(
+							tftypes.Set{
+								ElementType: tftypes.Object{
+									AttributeTypes: map[string]tftypes.Type{
+										"first_bool_attribute":  tftypes.Bool,
+										"second_bool_attribute": tftypes.Bool,
+									},
+								},
+							},
+							[]tftypes.Value{
+								tftypes.NewValue(
+									tftypes.Object{
+										AttributeTypes: map[string]tftypes.Type{
+											"first_bool_attribute":  tftypes.Bool,
+											"second_bool_attribute": tftypes.Bool,
+										},
+									},
+									map[string]tftypes.Value{
+										"first_bool_attribute":  tftypes.NewValue(tftypes.Bool, true),
+										"second_bool_attribute": tftypes.NewValue(tftypes.Bool, false),
 									},
 								),
 							},
@@ -3605,6 +3700,30 @@ func TestServerPlanResourceChange(t *testing.T) {
 								),
 							},
 						),
+						"test_computed_nested_set_bool_attributes": tftypes.NewValue(
+							tftypes.Set{
+								ElementType: tftypes.Object{
+									AttributeTypes: map[string]tftypes.Type{
+										"first_bool_attribute":  tftypes.Bool,
+										"second_bool_attribute": tftypes.Bool,
+									},
+								},
+							},
+							[]tftypes.Value{
+								tftypes.NewValue(
+									tftypes.Object{
+										AttributeTypes: map[string]tftypes.Type{
+											"first_bool_attribute":  tftypes.Bool,
+											"second_bool_attribute": tftypes.Bool,
+										},
+									},
+									map[string]tftypes.Value{
+										"first_bool_attribute":  tftypes.NewValue(tftypes.Bool, true),
+										"second_bool_attribute": tftypes.NewValue(tftypes.Bool, nil),
+									},
+								),
+							},
+						),
 						"test_computed_nested_single": tftypes.NewValue(
 							tftypes.Object{
 								AttributeTypes: map[string]tftypes.Type{
@@ -3975,6 +4094,30 @@ func TestServerPlanResourceChange(t *testing.T) {
 									},
 									map[string]tftypes.Value{
 										"string_attribute": tftypes.NewValue(tftypes.String, nil),
+									},
+								),
+							},
+						),
+						"test_computed_nested_set_bool_attributes": tftypes.NewValue(
+							tftypes.Set{
+								ElementType: tftypes.Object{
+									AttributeTypes: map[string]tftypes.Type{
+										"first_bool_attribute":  tftypes.Bool,
+										"second_bool_attribute": tftypes.Bool,
+									},
+								},
+							},
+							[]tftypes.Value{
+								tftypes.NewValue(
+									tftypes.Object{
+										AttributeTypes: map[string]tftypes.Type{
+											"first_bool_attribute":  tftypes.Bool,
+											"second_bool_attribute": tftypes.Bool,
+										},
+									},
+									map[string]tftypes.Value{
+										"first_bool_attribute":  tftypes.NewValue(tftypes.Bool, true),
+										"second_bool_attribute": tftypes.NewValue(tftypes.Bool, false),
 									},
 								),
 							},
@@ -4382,6 +4525,30 @@ func TestServerPlanResourceChange(t *testing.T) {
 									},
 									map[string]tftypes.Value{
 										"string_attribute": tftypes.NewValue(tftypes.String, "prior-state-attribute"),
+									},
+								),
+							},
+						),
+						"test_computed_nested_set_bool_attributes": tftypes.NewValue(
+							tftypes.Set{
+								ElementType: tftypes.Object{
+									AttributeTypes: map[string]tftypes.Type{
+										"first_bool_attribute":  tftypes.Bool,
+										"second_bool_attribute": tftypes.Bool,
+									},
+								},
+							},
+							[]tftypes.Value{
+								tftypes.NewValue(
+									tftypes.Object{
+										AttributeTypes: map[string]tftypes.Type{
+											"first_bool_attribute":  tftypes.Bool,
+											"second_bool_attribute": tftypes.Bool,
+										},
+									},
+									map[string]tftypes.Value{
+										"first_bool_attribute":  tftypes.NewValue(tftypes.Bool, true),
+										"second_bool_attribute": tftypes.NewValue(tftypes.Bool, false),
 									},
 								),
 							},
@@ -4809,6 +4976,30 @@ func TestServerPlanResourceChange(t *testing.T) {
 									},
 									map[string]tftypes.Value{
 										"string_attribute": tftypes.NewValue(tftypes.String, "default-attribute"),
+									},
+								),
+							},
+						),
+						"test_computed_nested_set_bool_attributes": tftypes.NewValue(
+							tftypes.Set{
+								ElementType: tftypes.Object{
+									AttributeTypes: map[string]tftypes.Type{
+										"first_bool_attribute":  tftypes.Bool,
+										"second_bool_attribute": tftypes.Bool,
+									},
+								},
+							},
+							[]tftypes.Value{
+								tftypes.NewValue(
+									tftypes.Object{
+										AttributeTypes: map[string]tftypes.Type{
+											"first_bool_attribute":  tftypes.Bool,
+											"second_bool_attribute": tftypes.Bool,
+										},
+									},
+									map[string]tftypes.Value{
+										"first_bool_attribute":  tftypes.NewValue(tftypes.Bool, true),
+										"second_bool_attribute": tftypes.NewValue(tftypes.Bool, false),
 									},
 								),
 							},
